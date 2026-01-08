@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum ConversionMode { oldToNew, newToOld }
+enum ConversionMode { oldToNew, newToOld, dollarToNewSyp }
 
 class BreakdownItem extends Equatable {
   final int denomination;

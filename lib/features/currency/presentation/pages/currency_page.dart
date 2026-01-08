@@ -9,6 +9,7 @@ import '../widgets/input_card.dart';
 import '../widgets/result_card.dart';
 import '../widgets/breakdown_card.dart';
 import '../widgets/warning_card.dart';
+import '../widgets/exchange_rate_input.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CurrencyPage extends StatelessWidget {
@@ -85,6 +86,8 @@ class CurrencyPageContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: const [
                 ModeSelector(),
+                SizedBox(height: 20),
+                ExchangeRateInput(),
                 SizedBox(height: 20),
                 InputCard(),
                 SizedBox(height: 20),

@@ -33,6 +33,11 @@ class ModeSelector extends StatelessWidget {
                 label: Text('جديد ← قديم'),
                 icon: Icon(Icons.arrow_forward),
               ),
+              ButtonSegment<ConversionMode>(
+                value: ConversionMode.dollarToNewSyp,
+                label: Text('دولار ← جديد'),
+                icon: Icon(Icons.attach_money),
+              ),
             ],
             selected: {state.mode},
             onSelectionChanged: (Set<ConversionMode> selection) {

@@ -20,6 +20,13 @@ class CurrencyLocalDataSource {
     return newAmount * 100;
   }
 
+  static const double defaultUsdToNewSypRate = 15000.0;
+
+  double convertDollarToNewSyp(double dollarAmount, [double? exchangeRate]) {
+    final rate = exchangeRate ?? defaultUsdToNewSypRate;
+    return dollarAmount * rate;
+  }
+
   List<BreakdownItem> calculateBreakdown(double newAmount) {
     final List<BreakdownItem> result = [];
     int remainingAmount = newAmount.floor();

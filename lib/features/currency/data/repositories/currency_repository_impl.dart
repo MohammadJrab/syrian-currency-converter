@@ -11,6 +11,7 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
   CurrencyConversionResult convert({
     required double inputAmount,
     required ConversionMode mode,
+    double exchangeRate = 15000.0,
   }) {
     double oldAmount;
     double newAmount;
@@ -18,9 +19,13 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
     if (mode == ConversionMode.oldToNew) {
       oldAmount = inputAmount;
       newAmount = dataSource.convertOldToNew(inputAmount);
-    } else {
+    } else if (mode == ConversionMode.newToOld) {
       newAmount = inputAmount;
       oldAmount = dataSource.convertNewToOld(inputAmount);
+    } else {
+      // dollarToNewSyp mode
+      oldAmount = 0; // Not applicable for dollar conversion
+      newAmount = dataSource.convertDollarToNewSyp(inputAmount, exchangeRate);
     }
 
     final breakdownList = dataSource.calculateBreakdown(newAmount);

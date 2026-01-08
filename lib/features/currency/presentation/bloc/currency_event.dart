@@ -29,3 +29,12 @@ class ChangeModeEvent extends CurrencyEvent {
 class ClearEvent extends CurrencyEvent {
   const ClearEvent();
 }
+
+class ChangeExchangeRateEvent extends CurrencyEvent {
+  final String rateText;
+
+  const ChangeExchangeRateEvent(this.rateText);
+
+  @override
+  List<Object?> get props => [rateText];
+}

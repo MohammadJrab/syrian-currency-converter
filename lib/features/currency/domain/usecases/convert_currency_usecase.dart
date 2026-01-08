@@ -9,7 +9,12 @@ class ConvertCurrencyUseCase {
   CurrencyConversionResult call({
     required double inputAmount,
     required ConversionMode mode,
+    double exchangeRate = 120,
   }) {
-    return repository.convert(inputAmount: inputAmount, mode: mode);
+    return repository.convert(
+      inputAmount: inputAmount,
+      mode: mode,
+      exchangeRate: exchangeRate,
+    );
   }
 }

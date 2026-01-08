@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../domain/entities/currency_entity.dart';
 import '../bloc/currency_bloc.dart';
 import '../bloc/currency_state.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -50,18 +51,34 @@ class ResultCard extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                _buildResultRow(
-                  context,
-                  'الليرة القديمة',
-                  _formatNumber(state.oldAmount),
-                  Icons.money_off,
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  height: 1,
-                  color: AppColors.steelGrey,
-                ),
-                const SizedBox(height: 16),
+                if (state.mode != ConversionMode.dollarToNewSyp) ...[
+                  _buildResultRow(
+                    context,
+                    'الليرة القديمة',
+                    _formatNumber(state.oldAmount),
+                    Icons.money_off,
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    height: 1,
+                    color: AppColors.steelGrey,
+                  ),
+                  const SizedBox(height: 16),
+                ],
+                if (state.mode == ConversionMode.dollarToNewSyp) ...[
+                  _buildResultRow(
+                    context,
+                    'الدولار',
+                    _formatNumber(state.dollarAmount),
+                    Icons.attach_money,
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    height: 1,
+                    color: AppColors.steelGrey,
+                  ),
+                  const SizedBox(height: 16),
+                ],
                 _buildResultRow(
                   context,
                   'الليرة الجديدة',
@@ -132,8 +149,13 @@ class ResultCard extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: state.newAmount > 0
             ? () {
-                final textToCopy =
-                    'القديم: ${_formatNumber(state.oldAmount)} | الجديد: ${_formatNumber(state.newAmount)}';
+                String textToCopy;
+                if (state.mode == ConversionMode.dollarToNewSyp) {
+                  textToCopy =
+                      'الدولار: ${_formatNumber(state.dollarAmount)} | الجديد: ${_formatNumber(state.newAmount)}';
+                } else {
+                  textToCopy = 'القديم: ${_formatNumber(state.oldAmount)} | الجديد: ${_formatNumber(state.newAmount)}';
+                }
                 Clipboard.setData(ClipboardData(text: textToCopy));
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
