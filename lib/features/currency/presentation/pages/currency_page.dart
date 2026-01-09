@@ -10,6 +10,10 @@ import '../widgets/result_card.dart';
 import '../widgets/breakdown_card.dart';
 import '../widgets/warning_card.dart';
 import '../widgets/exchange_rate_input.dart';
+import '../widgets/denomination_selector.dart';
+import '../widgets/old_denomination_selector.dart';
+import '../widgets/old_breakdown_card.dart';
+import '../widgets/ad_banner_widget.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CurrencyPage extends StatelessWidget {
@@ -80,25 +84,38 @@ class CurrencyPageContent extends StatelessWidget {
           gradient: AppColors.metalGradient,
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: const [
-                ModeSelector(),
-                SizedBox(height: 20),
-                ExchangeRateInput(),
-                SizedBox(height: 20),
-                InputCard(),
-                SizedBox(height: 20),
-                WarningCard(),
-                SizedBox(height: 20),
-                ResultCard(),
-                SizedBox(height: 20),
-                BreakdownCard(),
-                SizedBox(height: 40),
-              ],
-            ),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: const [
+                      ModeSelector(),
+                      SizedBox(height: 20),
+                      ExchangeRateInput(),
+                      SizedBox(height: 20),
+                      DenominationSelector(),
+                      SizedBox(height: 20),
+                      OldDenominationSelector(),
+                      SizedBox(height: 20),
+                      InputCard(),
+                      SizedBox(height: 20),
+                      WarningCard(),
+                      SizedBox(height: 20),
+                      ResultCard(),
+                      SizedBox(height: 20),
+                      BreakdownCard(),
+                      SizedBox(height: 20),
+                      OldBreakdownCard(),
+                      SizedBox(height: 40),
+                    ],
+                  ),
+                ),
+              ),
+              const AdBannerWidget(),
+            ],
           ),
         ),
       ),

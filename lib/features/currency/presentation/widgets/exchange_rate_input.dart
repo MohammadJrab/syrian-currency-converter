@@ -94,7 +94,7 @@ class _ExchangeRateInputState extends State<ExchangeRateInput> {
                 decoration: InputDecoration(
                   labelText: 'سعر الدولار بالليرة الجديدة',
                   labelStyle: TextStyle(color: AppColors.lightSteel),
-                  hintText: '15000',
+                  hintText: '120',
                   hintStyle: TextStyle(color: AppColors.steelGrey),
                   filled: true,
                   fillColor: AppColors.metalGrey,

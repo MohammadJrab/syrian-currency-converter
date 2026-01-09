@@ -54,3 +54,8 @@ pubspec.lock
 .fvm/
 .fvmrc
 .vscode
+
+# Keystore and signing files
+*.jks
+*.keystore
+android/gradle.properties

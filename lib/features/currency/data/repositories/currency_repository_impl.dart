@@ -11,7 +11,9 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
   CurrencyConversionResult convert({
     required double inputAmount,
     required ConversionMode mode,
-    double exchangeRate = 15000.0,
+    double exchangeRate = 120,
+    List<int> selectedDenominations = const [500, 200, 100, 50, 25, 10],
+    List<int> selectedOldDenominations = const [5000, 2000, 1000, 500],
   }) {
     double oldAmount;
     double newAmount;
@@ -28,8 +30,11 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
       newAmount = dataSource.convertDollarToNewSyp(inputAmount, exchangeRate);
     }
 
-    final breakdownList = dataSource.calculateBreakdown(newAmount);
-    final remainder = dataSource.calculateRemainder(newAmount);
+    final breakdownList = dataSource.calculateBreakdown(newAmount, selectedDenominations);
+    final remainder = dataSource.calculateRemainder(newAmount, selectedDenominations);
+
+    // Calculate old breakdown
+    final oldBreakdownList = dataSource.calculateOldBreakdown(oldAmount, selectedOldDenominations);
 
     String? warning;
     if (remainder > 0) {
@@ -40,13 +45,15 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
       oldAmount: oldAmount,
       newAmount: newAmount,
       breakdown: breakdownList,
+      oldBreakdown: oldBreakdownList,
       remainder: remainder,
       warning: warning,
     );
   }
 
   @override
-  List<BreakdownItem> breakdown(double newAmount) {
-    return dataSource.calculateBreakdown(newAmount);
+  List<BreakdownItem> breakdown(double newAmount,
+      {List<int> selectedDenominations = const [500, 200, 100, 50, 25, 10]}) {
+    return dataSource.calculateBreakdown(newAmount, selectedDenominations);
   }
 }

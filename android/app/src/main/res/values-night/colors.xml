@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Splash screen background color - Dark Metal theme for night mode -->
+    <color name="splash_background">#1A1A1A</color>
+    
+    <!-- App primary colors -->
+    <color name="primary_dark">#1A1A1A</color>
+    <color name="background_dark">#121212</color>
+</resources>

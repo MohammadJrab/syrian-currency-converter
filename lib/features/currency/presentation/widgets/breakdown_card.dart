@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/currency_bloc.dart';
 import '../bloc/currency_state.dart';
+import '../../domain/entities/currency_entity.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class BreakdownCard extends StatelessWidget {
@@ -11,6 +12,11 @@ class BreakdownCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CurrencyBloc, CurrencyState>(
       builder: (context, state) {
+        // إخفاء عند التحويل إلى العملة القديمة (جديد → قديم)
+        if (state.mode == ConversionMode.newToOld) {
+          return const SizedBox.shrink();
+        }
+
         if (state.breakdown.isEmpty) {
           return const SizedBox.shrink();
         }

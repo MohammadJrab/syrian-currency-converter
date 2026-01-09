@@ -21,6 +21,7 @@ class CurrencyConversionResult extends Equatable {
   final double oldAmount;
   final double newAmount;
   final List<BreakdownItem> breakdown;
+  final List<BreakdownItem> oldBreakdown;
   final double remainder;
   final String? warning;
 
@@ -28,10 +29,11 @@ class CurrencyConversionResult extends Equatable {
     required this.oldAmount,
     required this.newAmount,
     required this.breakdown,
+    this.oldBreakdown = const [],
     required this.remainder,
     this.warning,
   });
 
   @override
-  List<Object?> get props => [oldAmount, newAmount, breakdown, remainder, warning];
+  List<Object?> get props => [oldAmount, newAmount, breakdown, oldBreakdown, remainder, warning];
 }

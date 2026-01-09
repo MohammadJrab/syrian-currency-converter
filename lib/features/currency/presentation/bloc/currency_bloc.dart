@@ -12,6 +12,8 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
     on<ChangeModeEvent>(_onChangeMode);
     on<ClearEvent>(_onClear);
     on<ChangeExchangeRateEvent>(_onChangeExchangeRate);
+    on<ChangeDenominationsEvent>(_onChangeDenominations);
+    on<ChangeOldDenominationsEvent>(_onChangeOldDenominations);
   }
 
   void _onChangeInput(ChangeInputEvent event, Emitter<CurrencyState> emit) {
@@ -44,6 +46,8 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
       inputAmount: inputAmount,
       mode: state.mode,
       exchangeRate: state.exchangeRate,
+      selectedDenominations: state.selectedDenominations,
+      selectedOldDenominations: state.selectedOldDenominations,
     );
 
     emit(state.copyWith(
@@ -52,6 +56,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
       newAmount: result.newAmount,
       dollarAmount: state.mode == ConversionMode.dollarToNewSyp ? inputAmount : 0,
       breakdown: result.breakdown,
+      oldBreakdown: result.oldBreakdown,
       warning: result.warning,
       clearWarning: result.warning == null,
     ));
@@ -73,6 +78,8 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
       inputAmount: inputAmount,
       mode: event.mode,
       exchangeRate: state.exchangeRate,
+      selectedDenominations: state.selectedDenominations,
+      selectedOldDenominations: state.selectedOldDenominations,
     );
 
     emit(state.copyWith(
@@ -81,6 +88,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
       newAmount: result.newAmount,
       dollarAmount: event.mode == ConversionMode.dollarToNewSyp ? inputAmount : 0,
       breakdown: result.breakdown,
+      oldBreakdown: result.oldBreakdown,
       warning: result.warning,
       clearWarning: result.warning == null,
     ));
@@ -94,7 +102,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
     final rateText = event.rateText;
 
     if (rateText.isEmpty) {
-      emit(state.copyWith(exchangeRate: 15000.0));
+      emit(state.copyWith(exchangeRate: 120));
       return;
     }
 
@@ -113,6 +121,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
           inputAmount: inputAmount,
           mode: state.mode,
           exchangeRate: rate,
+          selectedDenominations: state.selectedDenominations,
         );
 
         emit(state.copyWith(
@@ -120,6 +129,60 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
           newAmount: result.newAmount,
           dollarAmount: inputAmount,
           breakdown: result.breakdown,
+          warning: result.warning,
+          clearWarning: result.warning == null,
+        ));
+      }
+    }
+  }
+
+  void _onChangeDenominations(ChangeDenominationsEvent event, Emitter<CurrencyState> emit) {
+    // Update selected denominations
+    emit(state.copyWith(selectedDenominations: event.denominations));
+
+    // Re-run conversion if there's existing input
+    if (state.inputText.isNotEmpty) {
+      final inputAmount = double.tryParse(state.inputText);
+      if (inputAmount != null && inputAmount >= 0) {
+        final result = convertCurrencyUseCase(
+          inputAmount: inputAmount,
+          mode: state.mode,
+          exchangeRate: state.exchangeRate,
+          selectedDenominations: event.denominations,
+        );
+
+        emit(state.copyWith(
+          oldAmount: result.oldAmount,
+          newAmount: result.newAmount,
+          breakdown: result.breakdown,
+          warning: result.warning,
+          clearWarning: result.warning == null,
+        ));
+      }
+    }
+  }
+
+  void _onChangeOldDenominations(ChangeOldDenominationsEvent event, Emitter<CurrencyState> emit) {
+    // Update selected old denominations
+    emit(state.copyWith(selectedOldDenominations: event.denominations));
+
+    // Re-run conversion if there's existing input
+    if (state.inputText.isNotEmpty) {
+      final inputAmount = double.tryParse(state.inputText);
+      if (inputAmount != null && inputAmount >= 0) {
+        final result = convertCurrencyUseCase(
+          inputAmount: inputAmount,
+          mode: state.mode,
+          exchangeRate: state.exchangeRate,
+          selectedDenominations: state.selectedDenominations,
+          selectedOldDenominations: event.denominations,
+        );
+
+        emit(state.copyWith(
+          oldAmount: result.oldAmount,
+          newAmount: result.newAmount,
+          breakdown: result.breakdown,
+          oldBreakdown: result.oldBreakdown,
           warning: result.warning,
           clearWarning: result.warning == null,
         ));

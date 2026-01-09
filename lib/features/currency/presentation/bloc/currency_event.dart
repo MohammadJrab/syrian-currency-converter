@@ -38,3 +38,21 @@ class ChangeExchangeRateEvent extends CurrencyEvent {
   @override
   List<Object?> get props => [rateText];
 }
+
+class ChangeDenominationsEvent extends CurrencyEvent {
+  final List<int> denominations;
+
+  const ChangeDenominationsEvent(this.denominations);
+
+  @override
+  List<Object?> get props => [denominations];
+}
+
+class ChangeOldDenominationsEvent extends CurrencyEvent {
+  final List<int> denominations;
+
+  const ChangeOldDenominationsEvent(this.denominations);
+
+  @override
+  List<Object?> get props => [denominations];
+}

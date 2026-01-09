@@ -1,8 +1,8 @@
 name: syiran_pounds
-description: "Syiran Pounds project."
+description: "Syrian Pound Converter - Convert old Syrian Pounds to new currency, calculate dollar exchange rates, and break down amounts into denominations."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ^3.6.1
@@ -14,6 +14,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^2.0.5
   google_fonts: ^6.2.1
+  google_mobile_ads: ^5.1.0
 
 dev_dependencies:
   flutter_test:
