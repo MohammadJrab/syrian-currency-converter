@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="محول الليرة السورية"
         android:name="${applicationName}"
@@ -34,6 +35,10 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8930140652907982~4159553421"/>
+        <!-- Declare support for 16 KB page sizes (required by Google Play) -->
+        <property
+            android:name="android.max_page_size"
+            android:value="16384"/>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

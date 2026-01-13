@@ -2,7 +2,7 @@ name: syiran_pounds
 description: "Syrian Pound Converter - Convert old Syrian Pounds to new currency, calculate dollar exchange rates, and break down amounts into denominations."
 publish_to: 'none'
 
-version: 1.0.0+2
+version: 1.0.3+7
 
 environment:
   sdk: ^3.6.1
